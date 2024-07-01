@@ -1,0 +1,8 @@
+Marking a card:
+- to mark a card, a method will be used that traverses through the BINGO card array and if it finds a value corresponding to the randomly generated integer, it will set the value at that point in the array to a   zero, so that when calculating the sum it will be easiest to return a sum of zero resulting in a bingo win.  Also, when printing the array, everywhere a zero appears in the array, it will print an X instead of  a zero.
+
+Checking for a duplicate pick:
+- two methods will be utilized to do this: generateRandomNum and checkIfDuplicate.  generateRandomNum will only generate a random int from 1-75.  This will then be called upon in a method called playOneRound,     and will be passed to another method checkIfDuplicate. The checkIfDuplicate will use traverse through the array and return a duplicate = true if a duplicate is detected, then will generate a new number, and     keep testing until a non-duplicate is generated.  This method will also add the number to another array which will house all of the generated ints for printing later.
+
+Determing if a card is a win:
+- 12 methods will be utilized to do this, 5 that return the sum of each row, 5 that return the sum of each column, and 2 that return the sum of each diagonal.  an "engine" method called playGame will call upon these using a while loop after each round until one of these methods returns a zero.

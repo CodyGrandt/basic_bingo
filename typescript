@@ -1,0 +1,417 @@
+Script started on Mon 06 Feb 2023 12:05:39 PM EST
+]0;grandt_cl@cobra:~/Progs/Prog1[?1034h[grandt_cl@cobra Prog1]$ cat VB[K[KBingo.java
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Bingo {
+
+	public static int ROUNDCOUNT = 0;
+	public static int[][]randNumsUsed = new int [13][9];
+	
+	public static void main(String[] args) throws FileNotFoundException {
+
+		int[][] bingoCard = new int[5][5];
+		playGame(bingoCard, randNumsUsed);
+	}
+	public static boolean checkIfDuplicate (int newNum, int[][] array) {
+		
+		boolean duplicate = false; 
+		int num = newNum;
+		for (int row = 0; row < array.length; row++) {
+			for (int column = 0; column < array[row].length; column++) {
+				if (num == array[row][column]) {
+					duplicate = true;
+				}
+			}
+		}
+		return duplicate;
+	}
+	public static void fillUp (int[][] card) throws FileNotFoundException {
+		
+		Scanner input = new Scanner (new File("bingo.in"));
+		
+		while (input.hasNext()) {
+			
+			for (int row = 0; row < card.length; row++) {
+				
+				for (int column = 0; column < card[row].length; column++) {
+					card[row][column] = input.nextInt();
+				}
+			}
+		}
+		input.close();
+	}
+	public static void printCard (int[][] card) {
+		System.out.println("YOUR BINGO CARD :\n");
+		System.out.println("   B    I    N    G    O");
+		String line = ("--------------------------");
+		for (int row = 0; row < card.length; row++) {
+			System.out.println(line);
+			
+			for (int column = 0; column < card[row].length; column++) {
+				
+				if (card[row][column] < 10) {
+					System.out.print("|  " + card[row][column] + " ");
+				}
+				else {
+					System.out.print("| " + card[row][column] + " ");
+				}
+			}
+			System.out.print("|");
+			System.out.println();
+		}	
+		System.out.print(line + "\n\n");
+	}
+	public static void playOneRound (int[][] card, int[][] array) {
+		
+		ROUNDCOUNT++;
+		int newNum = generateNewNum();
+		boolean duplicate = checkIfDuplicate(newNum, array);
+		
+		while (duplicate == true) {
+			newNum = generateNewNum();
+			duplicate = checkIfDuplicate(newNum, array);
+		}
+		for (int row = 0; row < card.length; row++) {
+				
+			for (int column = 0; column < card[row].length; column++) {
+				
+				if (newNum == card[row][column]) {
+						card[row][column] = 0;
+				}	
+			}
+		}
+		boolean assigned = false;
+		
+		for (int row = 0; row < array.length && !assigned; row++) {
+			
+			for (int column = 0; column < array[row].length; column++) {
+				
+				if (array[row][column] == 0) {
+					array[row][column] = newNum;
+					assigned = true;
+					break;
+				}
+			}
+		}
+	}
+	public static int generateNewNum () {
+		
+		int randomNum = (int)(1 + Math.random() * 75);
+		return randomNum;
+	}
+	public static int rowOneSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+			
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[0][column];
+				
+			}
+		}
+		return sum;
+	}
+	public static int rowTwoSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+			
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[1][column];
+				
+			}
+		}
+		return sum;
+	}
+	public static int rowThreeSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+			
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[2][column];
+				
+			}
+		}
+		return sum;
+	}
+	public static int rowFourSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+			
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[3][column];
+				
+			}
+		}
+		return sum;
+	}
+	public static int rowFiveSum (int[][] card) {
+	
+	int sum = 0;
+	for (int row = 0; row < card.length; row++) {
+		
+		for (int column = 0; column < card[row].length; column++) {
+			sum += card[4][column];
+			
+			}
+		}
+		return sum;
+	}
+	public static int columnOneSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+			
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[row][0];
+				
+				}
+			}
+			return sum;
+	}
+	public static int columnTwoSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+			
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[row][1];
+				
+				}
+			}
+			return sum;
+	}
+	public static int columnThreeSum (int[][] card) {
+	
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+		
+			for (int column = 0; column < card[row].length; column++) {
+					sum += card[row][2];
+			
+			}
+		}
+		return sum;
+}
+	public static int columnFourSum (int[][] card) {
+	
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+		
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[row][3];
+			
+			}
+		}
+		return sum;
+}
+	public static int columnFiveSum (int[][] card) {
+	
+		int sum = 0;
+		for (int row = 0; row < card.length; row++) {
+		
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[row][4];
+			
+			}
+		}
+		return sum;
+	}
+	public static int positiveDiagonalSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 4; row >= 0; row--) {
+			for (int column = 0; column < card[row].length; column++) {
+				sum += card[row][column];
+			}
+		}
+		return sum;
+	}
+	public static int negativeDiagonalSum (int[][] card) {
+		
+		int sum = 0;
+		for (int row = 0; row < 5; row++) {
+			for (int column = 4; column >= 0; column--) {
+				sum += card[row][column];
+			}
+		}
+		return sum;
+	}
+	public static void printCompletedCard (int[][] card) {
+
+		System.out.println("YOUR BINGO CARD :\n");
+		System.out.println("   B    I    N    G    O");
+		String line = ("--------------------------");
+		for (int row = 0; row < card.length; row++) {
+			System.out.println(line);
+			
+			for (int column = 0; column < card[row].length; column++) {
+				
+				if (card[row][column] < 10) {
+					if (card[row][column] > 0) {
+						System.out.print("|  " + card[row][column] + " ");
+					}
+					else {
+						System.out.print("|  X "); 
+						}
+				}
+				else {
+					System.out.print("| " + card[row][column] + " ");
+				}
+			}
+			System.out.print("|");
+			System.out.println();
+		}	
+		System.out.println(line);
+	}
+	public static void printRandNums (int[][] array) {
+		
+		System.out.println("BINGO NUMBERS PICKED AT RANDOM FROM BIN :");
+		for (int row = 0; row < array.length; row++) {
+		
+			for (int column = 0; column < array[row].length; column++) {
+					
+				if (array[row][column] != 0) {
+					System.out.print(array[row][column] + "\t");
+				}	
+			}
+			if (array[row][0] == 0) {
+				break;
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+	public static void playGame (int[][] card, int[][] array) throws FileNotFoundException {
+		
+		fillUp (card);
+		printCard (card);
+		boolean bingo = false;
+		
+		while (bingo == false) {
+			
+			playOneRound(card, array);
+			int row1 = rowOneSum(card);
+			int row2 = rowTwoSum(card);
+			int row3 = rowThreeSum(card);
+			int row4 = rowFourSum(card);
+			int row5 = rowFiveSum(card);
+			int col1 = columnOneSum(card);
+			int col2 = columnTwoSum(card);
+			int col3 = columnThreeSum(card);
+			int col4 = columnFourSum(card);
+			int col5 = columnFiveSum(card);
+			int posDiag = positiveDiagonalSum(card);
+			int negDiag = negativeDiagonalSum(card);
+		
+			if (row1 == 0 || row2 == 0 || row3 == 0 || row4 == 0 || row5 == 0) {
+				printRandNums(randNumsUsed);
+				System.out.println("YOU WIN WITH A HORIZONTAL BINGO AFTER " + ROUNDCOUNT + " PICKS!\n");
+				printCompletedCard(card);
+				bingo = true;
+				
+			}
+			if (col1 == 0 || col2 == 0 || col3 == 0 || col4 == 0 || col5 == 0) {
+				printRandNums(randNumsUsed);
+				System.out.println("YOU WIN WITH A VERTICAL BINGO AFTER " + ROUNDCOUNT + " PICKS!\n");
+				printCompletedCard(card);
+				bingo = true;
+				
+			}
+			if (posDiag == 0 || negDiag == 0) {
+				printRandNums(randNumsUsed);
+				System.out.println("YOU WIN WITH A DIAGONAL BINGO AFTER " + ROUNDCOUNT + " PICKS!\n");
+				printCompletedCard(card);
+				bingo = true;
+				
+			}
+		}
+		
+	}
+}
+]0;grandt_cl@cobra:~/Progs/Prog1[grandt_cl@cobra Prog1]$ javac Bingo.java
+]0;grandt_cl@cobra:~/Progs/Prog1[grandt_cl@cobra Prog1]$ jav [Ka Bingo[K[Kgo
+YOUR BINGO CARD :
+
+   B    I    N    G    O
+--------------------------
+| 12 | 28 | 31 | 49 | 66 |
+--------------------------
+|  3 | 26 | 45 | 53 | 75 |
+--------------------------
+| 10 | 17 | 33 | 59 | 67 |
+--------------------------
+|  7 | 19 | 42 | 55 | 74 |
+--------------------------
+|  2 | 23 | 37 | 46 | 70 |
+--------------------------
+
+BINGO NUMBERS PICKED AT RANDOM FROM BIN :
+8	31	26	15	45	55	68	75	27	
+61	40	62	43	5	28	4	52	39	
+48	53	3	
+
+YOU WIN WITH A HORIZONTAL BINGO AFTER 21 PICKS!
+
+YOUR BINGO CARD :
+
+   B    I    N    G    O
+--------------------------
+| 12 |  X |  X | 49 | 66 |
+--------------------------
+|  X |  X |  X |  X |  X |
+--------------------------
+| 10 | 17 | 33 | 59 | 67 |
+--------------------------
+|  7 | 19 | 42 |  X | 74 |
+--------------------------
+|  2 | 23 | 37 | 46 | 70 |
+--------------------------
+]0;grandt_cl@cobra:~/Progs/Prog1[grandt_cl@cobra Prog1]$ java Bingo
+YOUR BINGO CARD :
+
+   B    I    N    G    O
+--------------------------
+| 12 | 28 | 31 | 49 | 66 |
+--------------------------
+|  3 | 26 | 45 | 53 | 75 |
+--------------------------
+| 10 | 17 | 33 | 59 | 67 |
+--------------------------
+|  7 | 19 | 42 | 55 | 74 |
+--------------------------
+|  2 | 23 | 37 | 46 | 70 |
+--------------------------
+
+BINGO NUMBERS PICKED AT RANDOM FROM BIN :
+3	22	62	53	12	74	35	17	67	
+48	5	36	54	64	18	25	2	29	
+1	72	9	55	63	69	38	6	4	
+51	59	14	11	65	44	47	50	56	
+60	58	23	49	19	28	43	68	70	
+46	
+
+YOU WIN WITH A VERTICAL BINGO AFTER 46 PICKS!
+
+YOUR BINGO CARD :
+
+   B    I    N    G    O
+--------------------------
+|  X |  X | 31 |  X | 66 |
+--------------------------
+|  X | 26 | 45 |  X | 75 |
+--------------------------
+| 10 |  X | 33 |  X |  X |
+--------------------------
+|  7 |  X | 42 |  X |  X |
+--------------------------
+|  X |  X | 37 |  X |  X |
+--------------------------
+]0;grandt_cl@cobra:~/Progs/Prog1[grandt_cl@cobra Prog1]$ exit
+exit
+
+Script done on Mon 06 Feb 2023 12:06:09 PM EST
